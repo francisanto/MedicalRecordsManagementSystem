@@ -1,48 +1,68 @@
+/* Centering the container */
 body {
-    font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: #f4f4f4;
+    background-color: #f4f4f9; /* Light gray background */
+    font-family: 'Poppins', sans-serif;
     margin: 0;
 }
 
+/* Main container styling */
 .container {
     text-align: center;
     background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 350px;
 }
 
+/* Heading styling */
 h1 {
+    font-size: 1.8rem;
+    color: #333;
     margin-bottom: 20px;
 }
 
+/* Role buttons container */
 .role-options {
     display: flex;
-    justify-content: center;
-    gap: 20px;
+    flex-direction: column;
+    gap: 15px;
 }
 
-.role {
-    text-decoration: none;
-    padding: 15px 30px;
-    border-radius: 5px;
+/* Button styling */
+button {
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: 500;
     color: white;
-    font-size: 18px;
-    transition: 0.3s;
-}
-
-.doctor {
     background: #007bff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
-.patient {
+/* Secondary button color */
+button:nth-child(2) {
     background: #28a745;
 }
 
-.role:hover {
-    opacity: 0.8;
+/* Hover effect */
+button:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* Second button hover effect */
+button:nth-child(2):hover {
+    background: #218838;
+}
+
+/* Click effect */
+button:active {
+    transform: scale(0.98);
 }

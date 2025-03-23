@@ -11,9 +11,15 @@
     <div class="container">
         <h1>Select Your Role</h1>
         <div class="role-options">
-            <a href="login.html?role=doctor" class="role doctor">Doctor</a>
-            <a href="login.html?role=patient" class="role patient">Patient</a>
+            <button onclick="selectRole('doctor')">Doctor</button>
+            <button onclick="selectRole('patient')">Patient</button>
         </div>
     </div>
+    <script>
+        function selectRole(role) {
+            localStorage.setItem("selectedRole", role);
+            window.location.href = "login.html"; // Redirect to login page
+        }
+    </script>
 </body>
 </html>
