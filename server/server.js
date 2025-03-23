@@ -29,6 +29,7 @@ app.use("/api/search", searchRoutes);
 
 
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
 
 // WebSocket for notifications
 wss.on("connection", (ws) => {

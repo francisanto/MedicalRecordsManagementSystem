@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f4f4f4;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.role-options {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.role {
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 5px;
+    color: white;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.doctor {
+    background: #007bff;
+}
+
+.patient {
+    background: #28a745;
+}
+
+.role:hover {
+    opacity: 0.8;
+}

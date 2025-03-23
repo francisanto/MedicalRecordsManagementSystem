@@ -3,18 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Medical Records</title>
+    <title>Login - MedRecords</title>
+    <link rel="stylesheet" href="styles/common.css">
     <link rel="stylesheet" href="styles/login.css">
 </head>
 <body>
     <div class="login-container">
-        <h2>Login</h2>
-        <form id="login-form">
-            <input type="email" placeholder="Email" required>
-            <input type="password" placeholder="Password" required>
+        <h1 id="role-title">Login</h1>
+        <form action="server/authenticate.php" method="POST">
+            <input type="hidden" id="role" name="role" value="">
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
             <button type="submit">Login</button>
         </form>
+        <p>Don't have an account? <a href="register.html">Create one</a></p>
     </div>
-    <script src="js/auth.js"></script>
+
+    <script>
+        // Detect role from URL and update the page dynamically
+        const params = new URLSearchParams(window.location.search);
+        const role = params.get("role");
+        if (role) {
+            document.getElementById("role-title").innerText = `Login as ${role.charAt(0).toUpperCase() + role.slice(1)}`;
+            document.getElementById("role").value = role;
+        }
+    </script>
 </body>
 </html>

@@ -1,16 +1,19 @@
-// db.js - MySQL database connection setup
-
-const mysql = require("mysql2");
+const mysql = require("mysql");
 require("dotenv").config();
 
-const pool = mysql.createPool({
+const db = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
-    database: process.env.DB_NAME,
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0,
+    database: process.env.DB_NAME
 });
 
-module.exports = pool.promise();
+db.connect((err) => {
+    if (err) {
+        console.error("Database connection failed: " + err.message);
+    } else {
+        console.log("Connected to MySQL Database.");
+    }
+});
+
+module.exports = db;

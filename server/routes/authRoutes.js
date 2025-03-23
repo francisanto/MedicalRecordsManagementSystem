@@ -1,23 +1,21 @@
-// authRoutes.js - Handles user authentication
-
 const express = require("express");
+const db = require("../config/db"); // MySQL connection
 const router = express.Router();
-const db = require("../config/db");
 
-router.post("/login", async (req, res) => {
-    const { email, password, role } = req.body;
-    
-    try {
-        const [rows] = await db.query("SELECT * FROM users WHERE email = ? AND role = ?", [email, role]);
-        
-        if (rows.length > 0 && rows[0].password === password) {
-            res.json({ success: true, role: rows[0].role });
-        } else {
-            res.status(401).json({ success: false, message: "Invalid credentials" });
-        }
-    } catch (err) {
-        res.status(500).json({ success: false, message: "Server error" });
+router.post("/register", (req, res) => {
+    const { name, email, password, role } = req.body;
+
+    if (!name || !email || !password || !role) {
+        return res.json({ success: false, message: "All fields are required" });
     }
+
+    const query = "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)";
+    db.query(query, [name, email, password, role], (err, result) => {
+        if (err) {
+            return res.json({ success: false, message: "Database error" });
+        }
+        res.json({ success: true, message: "Account created successfully" });
+    });
 });
 
 module.exports = router;
