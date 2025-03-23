@@ -27,6 +27,9 @@ app.use("/api/doctor", doctorRoutes);
 app.use("/api/patient", patientRoutes);
 app.use("/api/search", searchRoutes);
 
+
+app.use(express.static('public'));
+
 // WebSocket for notifications
 wss.on("connection", (ws) => {
     console.log("New WebSocket connection");
@@ -41,6 +44,9 @@ wss.on("connection", (ws) => {
     });
 });
 
+app.get("/", (req, res) => {
+    res.send("Welcome to the Medical Records Management System!");
+});
 // Start server
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
