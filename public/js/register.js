@@ -31,16 +31,20 @@ document.getElementById("registerForm").addEventListener("submit", async functio
         });
 
         const data = await response.json();
+        console.log("Response Data:", data); // Debugging response from backend
 
-        if (data.success) {
+        if (data.success) {  // Now properly checks for success
             showMessage("Account Created Successfully!", "success");
+
             setTimeout(() => {
-                window.location.href = "/login.html"; // Redirect to login
-            }, 1500);
+                console.log("Redirecting to login.html");
+                window.location.href = "login.html"; // Redirect to login page
+            }, 800);
         } else {
             showMessage(data.message, "error");
         }
     } catch (error) {
+        console.error("Error:", error);
         showMessage("Server error. Please try again later.", "error");
     } finally {
         submitButton.disabled = false; // Re-enable button
