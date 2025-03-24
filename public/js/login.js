@@ -17,35 +17,42 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
 
     const email = document.querySelector("input[name='email']").value;
     const password = document.querySelector("input[name='password']").value;
+    const role = document.getElementById("role").value; // Get the role
 
-    if (!email || !password) {
+    if (!email || !password || !role) {
         alert("All fields are required!");
         return;
     }
 
-    const response = await fetch("http://localhost:3000/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
-    });
+    try {
+        const response = await fetch("http://localhost:3000/api/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+        });
 
-    const data = await response.json();
+        const data = await response.json();
 
-    if (data.success) {
-        alert("Login Successful!");
+        if (data.success) {
+            // Store user details & role in localStorage
+            localStorage.setItem("user", JSON.stringify(data.user));
+            localStorage.setItem("role", data.user.role);
 
-        // Store user info in localStorage
-        localStorage.setItem("user", JSON.stringify(data.user));
-
-        // Redirect based on role
-        if (data.user.role === "admin") {
-            window.location.href = "admin_dashboard.html";
-        } else if (data.user.role === "doctor") {
-            window.location.href = "doctor_dashboard.html";
-        } else if (data.user.role === "patient") {
-            window.location.href = "patient_dashboard.html";
+            // Redirect based on role without alert
+            if (data.user.role === "admin") {
+                window.location.href = "admin-dashboard.html";
+            } else if (data.user.role === "doctor") {
+                window.location.href = "doctor-dashboard.html";
+            } else if (data.user.role === "patient") {
+                window.location.href = "patient-dashboard.html";
+            } else {
+                alert("Invalid role. Contact admin.");
+            }
+        } else {
+            alert(data.message);
         }
-    } else {
-        alert(data.message);
+    } catch (error) {
+        console.error("Login Error:", error);
+        alert("An error occurred. Please try again.");
     }
 });
