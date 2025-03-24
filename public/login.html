@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="login-container">
-        <h1 id="role-title">Login</h1>
+        <h1 id="role-title">Login</h1>  <!-- Role title updates dynamically -->
         <form action="server/authenticate.php" method="POST">
             <input type="hidden" id="role" name="role" value="">
             <input type="email" name="email" placeholder="Email" required>
@@ -19,14 +19,6 @@
         <p>Don't have an account? <a id="createAccount" href="register.html">Create One</a></p>
     </div>
 
-    <script>
-        // Detect role from URL and update the page dynamically
-        document.addEventListener("DOMContentLoaded", function () {
-        const role = localStorage.getItem("selectedRole");
-        if (role) {
-            document.getElementById("createAccount").href = `register.html?role=${role}`;
-        }
-    });
-    </script>
+    <script src="js/login.js"></script>
 </body>
 </html>
