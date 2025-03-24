@@ -1,30 +1,35 @@
 const express = require("express");
-const User = require("../models/User");  // Ensure correct import
-const jwt = require("jsonwebtoken"); // For authentication
+const jwt = require("jsonwebtoken");
 const db = require("../config/db"); // MySQL connection
 const router = express.Router();
 
-router.post("/register", async (req, res) => {
-    try {
-        const { name, email, password, role } = req.body;
+router.post("/register", (req, res) => {
+    const { name, email, password, role } = req.body;
 
-        if (!name || !email || !password || !role) {
-            return res.status(400).json({ error: "All fields are required" });
-        }
-
-        const existingUser = await User.findByEmail(email);
-        if (existingUser) {
-            return res.status(400).json({ error: "Email already registered" });
-        }
-
-        // Store password as plain text (NOT RECOMMENDED FOR PRODUCTION)
-        await User.createUser(name, email, password, role);
-
-        res.status(201).json({ message: "User registered successfully" });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Internal server error" });
+    if (!name || !email || !password || !role) {
+        return res.status(400).json({ success: false, message: "All fields are required" });
     }
+
+    // Check if user already exists
+    const queryCheck = "SELECT * FROM users WHERE email = ?";
+    db.query(queryCheck, [email], (err, results) => {
+        if (err) {
+            return res.status(500).json({ success: false, message: "Database error" });
+        }
+        if (results.length > 0) {
+            return res.status(400).json({ success: false, message: "Email already registered" });
+        }
+
+        // Insert user with plain text password (⚠️ NOT SECURE for production)
+        const queryInsert = "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)";
+        db.query(queryInsert, [name, email, password, role], (err) => {
+            if (err) {
+                return res.status(500).json({ success: false, message: "Failed to register user" });
+            }
+
+            res.status(201).json({ success: true, message: "User registered successfully" });
+        });
+    });
 });
 
 router.post("/login", (req, res) => {
@@ -42,7 +47,7 @@ router.post("/login", (req, res) => {
 
         const user = results[0];
 
-        // Compare passwords directly (since no hashing)
+        // Compare passwords (plain text)
         if (password !== user.password) {
             return res.status(400).json({ success: false, message: "Invalid credentials" });
         }
