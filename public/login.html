@@ -9,8 +9,8 @@
 </head>
 <body>
     <div class="login-container">
-        <h1 id="role-title">Login</h1>  <!-- Role title updates dynamically -->
-        <form action="server/authenticate.php" method="POST">
+        <h1 id="role-title">Login</h1>
+        <form id="loginForm">
             <input type="hidden" id="role" name="role" value="">
             <input type="email" name="email" placeholder="Email" required>
             <input type="password" name="password" placeholder="Password" required>
@@ -20,5 +20,19 @@
     </div>
 
     <script src="js/login.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const role = localStorage.getItem("selectedRole");
+            if (role) {
+                document.getElementById("role-title").textContent = `Login as ${capitalize(role)}`;
+                document.getElementById("role").value = role;
+                document.getElementById("createAccount").href = `register.html?role=${role}`;
+            }
+        });
+
+        function capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+    </script>
 </body>
 </html>
