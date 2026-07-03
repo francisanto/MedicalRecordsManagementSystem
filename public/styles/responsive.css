@@ -1,0 +1,10 @@
+/* responsive.css - Mobile responsiveness */
+@media (max-width: 768px) {
+    .dashboard {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+}

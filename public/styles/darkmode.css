@@ -1,0 +1,15 @@
+/* darkmode.css - Dark mode styles */
+body.dark-mode {
+    background: #121212;
+    color: #fff;
+}
+
+.dark-mode .container {
+    background: #1e1e1e;
+    color: #fff;
+}
+
+.dark-mode button {
+    background: #333;
+    color: #fff;
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Role</title>
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/role-selection.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Select Your Role</h1>
+        <div class="role-options">
+            <button onclick="selectRole('doctor')">Doctor</button>
+            <button onclick="selectRole('patient')">Patient</button>
+        </div>
+    </div>
+    <script>
+        function selectRole(role) {
+            localStorage.setItem("selectedRole", role);
+            window.location.href = "login.html"; // Redirect to login page
+        }
+    </script>
+</body>
+</html>
